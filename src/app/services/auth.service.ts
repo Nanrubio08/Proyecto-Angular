@@ -10,21 +10,25 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   login(credentials: { correo: string; password: string }): Observable<{ token: string }> {
-    return this.http.post<{ token: string }>(`${environment.apiUrl}/clientes/login`, credentials)
+    return this.http.post<{ token: string }>(`${environment.apiUrl}/cliente/login`, credentials)
       .pipe(
         tap(response => {
           localStorage.setItem('token', response.token);
         })
       );
   }
-
-  register(data: { correo: string; password: string; nombre?: string }): Observable<{ token: string }> {
-  return this.http.post<{ token: string }>(`${environment.apiUrl}/clientes/registrar`, data)
-    .pipe(
-      tap(response => {
-        localStorage.setItem('token', response.token);
-      })
-    );
+  register(data: {
+  nombre: string;
+  tipoid: string;
+  id: number;
+  correo: string;
+  telefono: string;
+  direccion: string;
+  ciudad: string;
+  password: string;
+}): Observable<{ token: string }> {
+  return this.http.post<{ token: string }>(`${environment.apiUrl}/cliente/registrar`, data)
+    .pipe(tap(response => localStorage.setItem('token', response.token)));
 }
 
   logout(): void {

@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { NavbarComponent } from '../../components/navbar/navbar.component';
 
 @Component({
   selector: 'app-register-page',
@@ -15,7 +14,12 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
 export class RegisterPageComponent {
   form = this.fb.group({
     nombre: ['', Validators.required],
+    tipoid: ['', Validators.required],
+    id: ['', Validators.required],
     correo: ['', [Validators.required, Validators.email]],
+    telefono: [''],
+    direccion: [''],
+    ciudad: [''],
     password: ['', Validators.required]
   });
 
@@ -25,23 +29,31 @@ export class RegisterPageComponent {
   constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) {}
 
   onSubmit(): void {
-    if (this.form.invalid) return;
+  if (this.form.invalid) return;
 
-    const { nombre, correo, password } = this.form.value as {
-      nombre: string;
-      correo: string;
-      password: string;
-    };
+  const raw = this.form.value;
 
-    this.loading = true;
-    this.errorMsg = '';
+  const payload = {
+    nombre: raw.nombre ?? '',
+    tipoid: raw.tipoid ?? '',
+    id: Number(raw.id), 
+    correo: raw.correo ?? '',
+    telefono: raw.telefono ?? '',
+    direccion: raw.direccion ?? '',
+    ciudad: raw.ciudad ?? '',
+    password: raw.password ?? ''
+  };
 
-    this.auth.register({ nombre, correo, password }).subscribe({
-      next: () => this.router.navigate(['/perfil']),
-      error: (err) => {
-        this.errorMsg = err.error?.error || 'Error al registrar';
-        this.loading = false;
-      }
-    });
+  this.loading = true;
+  this.errorMsg = '';
+
+  this.auth.register(payload).subscribe({
+    next: () => this.router.navigate(['/perfil']),
+    error: (err) => {
+      this.errorMsg = err.error?.error || 'Error al registrar';
+      this.loading = false;
+    }
+  });
+
   }
 }

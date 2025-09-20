@@ -6,7 +6,7 @@ import { routes } from './app/app.routes';
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideHttpClient(),     // ✅ Esto habilita HttpClient globalmente
-    provideRouter(routes)    // si estás usando rutas standalone
+    provideHttpClient(),     
+    provideRouter(routes)    
   ]
 });
