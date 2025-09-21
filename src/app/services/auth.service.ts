@@ -4,19 +4,21 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { LoginResponse } from '../interfaces/login-response.interface';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   constructor(private http: HttpClient) {}
 
-  login(credentials: { correo: string; password: string }): Observable<{ token: string }> {
-    return this.http.post<{ token: string }>(`${environment.apiUrl}/cliente/login`, credentials)
-      .pipe(
-        tap(response => {
-          localStorage.setItem('token', response.token);
-        })
-      );
-  }
+ login(credentials: { correo: string; password: string }): Observable<LoginResponse> {
+  return this.http.post<LoginResponse>(`${environment.apiUrl}/cliente/login`, credentials)
+    .pipe(
+      tap(response => {
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('cliente', JSON.stringify(response.cliente));
+      })
+    );
+}
   register(data: {
   nombre: string;
   tipoid: string;
@@ -26,8 +28,9 @@ export class AuthService {
   direccion: string;
   ciudad: string;
   password: string;
-}): Observable<{ token: string }> {
-  return this.http.post<{ token: string }>(`${environment.apiUrl}/cliente/registrar`, data)
+    
+    }): Observable<{ token: string }> {
+    return this.http.post<{ token: string }>(`${environment.apiUrl}/cliente/registrar`, data)
     .pipe(tap(response => localStorage.setItem('token', response.token)));
 }
 

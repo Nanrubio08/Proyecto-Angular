@@ -1,0 +1,91 @@
+<div class="navbar">
+<app-navbar></app-navbar>
+</div>
+<div class="container mt-5 perfilCliente">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white text-center">
+          <h4 class="mb-0">Perfil del Cliente</h4>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <!-- Nombre -->
+            <div class="mb-3">
+              <label class="form-label fw-bold">Nombre completo</label>
+              <div *ngIf="!editMode" class="form-control-plaintext">{{ form.value.nombre }}</div>
+              <input *ngIf="editMode" type="text" class="form-control" formControlName="nombre">
+            </div>
+
+            <!-- Tipo de documento -->
+            <div class="mb-3">
+              <label class="form-label fw-bold">Tipo de documento</label>
+              <div class="form-control-plaintext">{{ form.value.tipoid }}</div>
+            </div>
+
+            <!-- Número de documento -->
+            <div class="mb-3">
+              <label class="form-label fw-bold">Número de documento</label>
+              <div class="form-control-plaintext">{{ form.value.id }}</div>
+            </div>
+
+            <!-- Correo -->
+            <div class="mb-3">
+              <label class="form-label fw-bold">Correo electrónico</label>
+              <div *ngIf="!editMode" class="form-control-plaintext">{{ form.value.correo }}</div>
+              <input *ngIf="editMode" type="email" class="form-control" formControlName="correo">
+            </div>
+
+            <!-- Teléfono -->
+            <div class="mb-3">
+              <label class="form-label fw-bold">Teléfono</label>
+              <div *ngIf="!editMode" class="form-control-plaintext">{{ form.value.telefono }}</div>
+              <input *ngIf="editMode" type="tel" class="form-control" formControlName="telefono">
+            </div>
+
+            <!-- Dirección -->
+            <div class="mb-3">
+              <label class="form-label fw-bold">Dirección</label>
+              <div *ngIf="!editMode" class="form-control-plaintext">{{ form.value.direccion }}</div>
+              <input *ngIf="editMode" type="text" class="form-control" formControlName="direccion">
+            </div>
+
+            <!-- Ciudad -->
+            <div class="mb-3">
+              <label class="form-label fw-bold">Ciudad</label>
+              <div *ngIf="!editMode" class="form-control-plaintext">{{ form.value.ciudad }}</div>
+              <input *ngIf="editMode" type="text" class="form-control" formControlName="ciudad">
+            </div>
+
+            <!-- Contraseña -->
+            <div class="mb-3" *ngIf="editMode">
+              <label class="form-label fw-bold">Nueva contraseña</label>
+              <input type="password" class="form-control" formControlName="password" placeholder="********">
+            </div>
+
+            <!-- Botones -->
+            <div class="d-flex justify-content-between mt-4">
+              <button type="button" class="btn btn-outline-primary" (click)="toggleEdit()">
+                {{ editMode ? 'Cancelar' : 'Editar perfil' }}
+              </button>
+              <button type="submit" class="btn btn-success" [disabled]="form.invalid || !editMode">
+                Guardar cambios
+              </button>
+            </div>
+          </form>
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1055">
+        <div class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" #toastElement>
+        <div class="d-flex">
+        <div class="toast-body">
+        ✅ Cambios guardados correctamente.
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Cerrar"></button>
+        </div>
+        </div>
+    </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>
