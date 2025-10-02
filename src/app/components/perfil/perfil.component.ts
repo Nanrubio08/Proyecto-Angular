@@ -5,15 +5,13 @@ import { RouterModule } from '@angular/router';
 import { ClienteService } from '../../services/cliente.service';
 import { Cliente } from '../../interfaces/cliente.interface';
 import { ClienteUpdate } from '../../interfaces/cliente-update.interface';
-import { NavbarComponent } from '../navbar/navbar.component';
 import { isPlatformBrowser } from '@angular/common';
 import { PLATFORM_ID, Inject } from '@angular/core';
-import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-perfil-page',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule,NavbarComponent,FooterComponent],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.scss'
 })
@@ -26,7 +24,7 @@ export class PerfilPageComponent implements OnInit {
     telefono: [{ value: '', disabled: true }, Validators.required],
     direccion: [{ value: '', disabled: true }, Validators.required],
     ciudad: [{ value: '', disabled: true }, Validators.required],
-    password: [''] // solo se usa en edición
+    password: [''] 
   });
 
   editMode = false;
